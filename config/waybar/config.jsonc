@@ -1,0 +1,282 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "reload_style_on_change": true,
+  "modules-left": [
+    "custom/padd",
+    "custom/l_end",
+    "custom/arch",
+    "custom/r_end",
+    "custom/padd",
+    "custom/l_end",
+    "memory",
+    "custom/space",
+    "cpu",
+    "custom/space",
+    "disk",
+    "custom/r_end",
+    "custom/padd",
+    "custom/l_end",
+    "hyprland/workspaces",
+    "custom/r_end",
+    "custom/padd"
+  ],
+  "modules-center": [
+    "custom/padd",
+    "custom/l_end",
+    "wlr/taskbar",
+    "custom/r_end",
+    "custom/padd"
+  ],
+  "modules-right": [
+    "custom/padd",
+    "custom/l_end",
+    "custom/wallchange",
+    "custom/space",
+    "custom/screenshot",
+    "custom/space",
+    "custom/update",
+    "custom/r_end",
+    "custom/padd",
+    "custom/l_end",
+    "battery",
+    "custom/space",
+    "clock",
+    "custom/r_end",
+    "custom/padd",
+    "custom/l_end",
+    "backlight",
+    "custom/space",
+    "pulseaudio",
+    "custom/space",
+    "bluetooth",
+    "custom/space",
+    "network",
+    "custom/space",
+    "custom/power",
+    "custom/r_end",
+    "custom/padd"
+  ],
+
+  "custom/arch": {
+    "format": " ",
+    "tooltip": true,
+    "tooltip-format": "Open Arch Wiki",
+    "on-click": "pkill wofi || wofi -s ~/.config/wofi/menu.css",
+  },
+
+  "custom/wallchange": {
+    "format": "⛰️{}",
+    "rotate": 0,
+    "exec": "echo ; echo ⛰️ switch wallpaper",
+    "on-click": "~/hyprlab/config/scripts/swww.sh",
+    "on-click-right": "~/hyprlab/config/scripts/swww.sh switch",
+    "interval": 86400,
+    "tooltip": true,
+  },
+
+  "custom/screenshot": {
+    "format": "📸",
+    "on-click": "~/.config/wofi/screenshotmenu",
+    "tooltip": true,
+    "tooltip-format": "📸 Take a screenshot",
+  },
+
+  "custom/update": {
+    "format": "🚀",
+    "tooltip": true,
+    "tooltip-format": "🚀 Update system",
+    "on-click": "kitty bash ~/hyprlab/config/scripts/maintenance.sh",
+  },
+
+  "cpu": {
+    "format": "   {usage}% ",
+    "tooltip-format": "CPU Usage: {usage}%\nCores: {cores}",
+    "tooltip": true,
+    "interval": 1,
+  },
+
+  "memory": {
+    "format": "   {used}/{total} GB ({percentage}%)",
+    "tooltip-format": "Used: {used} GB\nTotal: {total} GB\nUsage: {percentage}%",
+    "tooltip": true,
+    "interval": 1,
+    "exec": "free -h | awk '/^Mem:/ {print $3 \" / \" $2 \" GB\", $3/$2*100}' | awk '{print $1, $2, $3}'",
+    "format-alt": "{used}/{total} GB ({percentage}%)",
+  },
+
+  "disk": {
+    "format": "   {percentage_used}%",
+    "tooltip-format": "Used: {used} GB\nTotal: {total} GB\nFree: {free} GB\nUsage: {percentage_used}%",
+    "tooltip": true,
+    "interval": 1,
+    "exec": "df -h --output=used,size,avail | awk 'NR==2 {print $1, $2, $3, $1/$2*100}'",
+    "format-alt": "{used}/{total} GB ({free} GB free, {percentage_used}%)",
+  },
+
+  "hyprland/workspaces": {},
+
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "rotate": 0,
+    "icon-size": 18,
+    "icon-theme": "Tela-circle-dracula",
+    "spacing": 0,
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "ignore-list": ["Alacritty"],
+    "app_ids-mapping": {
+      "firefoxdeveloperedition": "firefox-developer-edition",
+    },
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20,
+    },
+    "format": "{icon} {capacity}%",
+    "rotate": 0,
+    "format-charging": "  {capacity}%",
+    "format-plugged": "  {capacity}%",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+  },
+
+  "clock": {
+    "format": "<span color='#b4befe'>   </span>{:%I:%M %p}",
+    "rotate": 0,
+    "format-alt": "{:%R 󰃭 %d·%m·%y}",
+    "tooltip-format": "<span>{calendar}</span>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b>{}</b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+    },
+  },
+
+  "backlight": {
+    "device": "intel_backlight",
+    "rotate": 0,
+    "format": "{icon}  {percent}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "on-scroll-up": "brightnessctl set 1%+",
+    "on-scroll-down": "brightnessctl set 1%-",
+    "min-length": 6,
+  },
+
+  "pulseaudio": {
+    "format": "{icon}   {volume}",
+    "rotate": 0,
+    "format-muted": "🔇",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+    "tooltip-format": "{icon} {desc} // {volume}%",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""],
+    },
+  },
+
+  "bluetooth": {
+    "format": "<span color='#b4befe'></span> {status}",
+    "format-disabled": "<span color='#b4befe'> Off</span>",
+    "format-connected": "<span color='#b4befe'></span> {device_alias}",
+    "tooltip-format": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}   {device_address}",
+    "on-click": "blueman-manager",
+  },
+
+  "network": {
+    "interface": "wlo1",
+    "format": "{ifname}",
+    "format-wifi": "<span color='#b4befe'>    </span>{essid}",
+    "format-ethernet": "{ipaddr}/{cidr} ",
+    "format-disconnected": "<span color='#b4befe'>󰖪 </span>No Network",
+    "tooltip-format": "{status}  // {ip}",
+    "tooltip": true,
+    "on-click": "nm-connection-editor",
+  },
+
+  "custom/power": {
+    "format": " {}",
+    "rotate": 0,
+    "exec": "echo ; echo 🌪️ shutdown",
+    "interval": 86400,
+    "on-click": "~/.config/wofi/powermenu",
+    "tooltip": true,
+  },
+
+  "custom/l_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/r_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/sl_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/sr_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/rl_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/rr_end": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/padd": {
+    "format": "  ",
+    "interval": "once",
+    "tooltip": false,
+  },
+
+  "custom/space": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  }
+}

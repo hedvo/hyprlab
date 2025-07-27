@@ -1,0 +1,74 @@
+#  __  __       _         
+# |  \/  | __ _| | _____  
+# | |\/| |/ _` | |/ / _ \ 
+# | |  | | (_| |   < (_) |
+# |_|  |_|\__,_|_|\_\___/ 
+
+# Appearance
+font=JetBrainsMono 13
+background-color=#0c0014ee
+text-color=#cdd6f4
+border-color=#89b4faaa
+border-size=2
+border-radius=15
+progress-color=over #33ccffff
+
+# Positioning & Size
+width=380
+height=120
+margin=15
+padding=20
+anchor=top-right
+outer-margin=15
+
+# Behavior
+default-timeout=8000
+ignore-timeout=1
+max-visible=5
+sort=-time
+layer=overlay
+markup=1
+actions=1
+
+# Icons
+icon-path=/usr/share/icons/Papirus-Dark:/usr/share/icons/Adwaita
+max-icon-size=64
+icon-location=left
+
+# Advanced styling
+text-alignment=left
+max-history=20
+history=1
+
+# Urgency levels with beautiful colors
+[urgency=low]
+background-color=#0c0014dd
+border-color=#89b4fa80
+text-color=#a6adc8
+default-timeout=5000
+
+[urgency=normal]
+background-color=#0c0014ee
+border-color=#89b4facc
+text-color=#cdd6f4
+default-timeout=8000
+
+[urgency=critical]
+background-color=#1e1e2eff
+border-color=#f38ba8ff
+text-color=#f38ba8
+default-timeout=15000
+
+# App-specific styling
+[app-name="Spotify"]
+border-color=#1db954
+background-color=#0c0014f0
+text-color=#1db954
+
+[app-name="Volume"]
+border-color=#fab387
+background-color=#0c0014f0
+
+[app-name="Brightness"]
+border-color=#f9e2af
+background-color=#0c0014f0

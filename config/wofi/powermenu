@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Display the power menu and capture the chosen option
+chosen=$(echo -e "     Lock\n     Suspend\n     Hibernate\n     Restart\n     Shutdown\n     Exit" | wofi --dmenu --prompt="Power Menu" --style="$HOME/.config/wofi/menu.css")
+
+# Remove leading/trailing whitespace and icons
+option=$(echo "$chosen" | awk '{print $2}')
+
+case "$option" in
+    Lock) 
+        echo ":: Lock"
+        sleep 0.5
+        hyprlock    
+        ;;
+    Suspend) 
+        echo ":: Suspend"
+        sleep 0.5
+        if systemctl suspend; then
+            hyprlock
+        else
+            echo "Failed to suspend"
+        fi
+        ;;
+    Hibernate) 
+        echo ":: Hibernate"
+        sleep 1
+        if systemctl hibernate; then
+            hyprlock
+        else
+            echo "Failed to hibernate"
+        fi
+        ;;
+    Restart) 
+        echo ":: Reboot"
+        sleep 0.5
+        systemctl reboot
+        ;;
+    Shutdown) 
+        echo ":: Shutdown"
+        sleep 0.5
+        systemctl poweroff
+        ;;
+    Exit) 
+        echo ":: Exit"
+        if [[ -f "$FILE" ]]; then
+            rm "$FILE"
+        fi
+        sleep 0.5
+        killall -9 Hyprland 
+        sleep 2
+        ;;
+    *) 
+        echo "No valid option selected"
+        ;;
+esac
