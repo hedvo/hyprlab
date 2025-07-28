@@ -67,6 +67,15 @@ fi
 NEXT_INDEX=$(( (CURRENT_INDEX % WALLPAPER_COUNT) + 1 ))
 
 NEXT_WALLPAPER=$(ls "$WALLPAPER_DIR/$CURRENT_TYPE"*.{jpg,png,jpeg} | sed -n "${NEXT_INDEX}p")
-swww img "$NEXT_WALLPAPER" --transition-type grow --transition-bezier ".43,1.19,1,.4" --transition-duration 1 --transition-fps 60 --invert-y --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo "0,0")" &
+
+ANIMATION_FILE="/tmp/swww_animation"
+if [ -f "$ANIMATION_FILE" ]; then
+    ANIMATION_TYPE=$(cat "$ANIMATION_FILE")
+else
+    ANIMATION_TYPE="grow"
+    echo "$ANIMATION_TYPE" > "$ANIMATION_FILE"
+fi
+
+swww img "$NEXT_WALLPAPER" --transition-type "$ANIMATION_TYPE" --transition-bezier ".43,1.19,1,.4" --transition-duration 1 --transition-fps 60 --invert-y --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo "0,0")" &
 
 echo $NEXT_INDEX > "$STATE_FILE"

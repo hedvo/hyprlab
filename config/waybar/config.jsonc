@@ -23,6 +23,10 @@
     "custom/l_end",
     "hyprland/workspaces",
     "custom/r_end",
+    "custom/padd",
+    "custom/l_end",
+    "custom/spotify",
+    "custom/r_end",
     "custom/padd"
   ],
   "modules-center": [
@@ -37,6 +41,10 @@
     "custom/l_end",
     "custom/wallchange",
     "custom/space",
+    "custom/wallanimation",
+    "custom/r_end",
+    "custom/padd",
+    "custom/l_end",
     "custom/screenshot",
     "custom/space",
     "custom/update",
@@ -70,52 +78,61 @@
   },
 
   "custom/wallchange": {
-    "format": "⛰️{}",
+    "format": " <span color='#a6e3a1' size='large'>󰸉</span> ",
     "rotate": 0,
-    "exec": "echo ; echo ⛰️ switch wallpaper",
+    "exec": "echo ; echo  switch wallpaper",
     "on-click": "~/hyprlab/config/scripts/swww.sh",
     "on-click-right": "~/hyprlab/config/scripts/swww.sh switch",
     "interval": 86400,
     "tooltip": true,
   },
 
+  "custom/wallanimation": {
+    "format": " <span color='#a6e3a1' size='large'>󰽡</span> ",
+    "exec": "echo ; echo  change animation",
+    "interval": 86400,
+    "tooltip": true,
+    "tooltip-format": "Change wallpaper animation",
+    "on-click": "~/hyprlab/config/scripts/swww-animation.sh",
+  },
+
   "custom/screenshot": {
-    "format": "📸",
+    "format": " <span color='#89dceb' size='large'>󰄀</span> ",
+    "exec": "echo ; echo  take screenshot",
+    "interval": 86400,
     "on-click": "~/.config/wofi/screenshotmenu",
     "tooltip": true,
-    "tooltip-format": "📸 Take a screenshot",
+    "tooltip-format": "Take a screenshot",
   },
 
   "custom/update": {
-    "format": "🚀",
+    "format": " <span color='#f9e2af' size='large'>󰚰</span> ",
+    "exec": "echo ; echo  update system",
+    "interval": 86400,
     "tooltip": true,
-    "tooltip-format": "🚀 Update system",
+    "tooltip-format": "Update system",
     "on-click": "kitty bash ~/hyprlab/config/scripts/maintenance.sh",
   },
 
   "cpu": {
-    "format": "   {usage}% ",
+    "format": "<span color='#a6e3a1'>󰻠</span>  {usage}%",
     "tooltip-format": "CPU Usage: {usage}%\nCores: {cores}",
     "tooltip": true,
     "interval": 1,
   },
 
   "memory": {
-    "format": "   {used}/{total} GB ({percentage}%)",
+    "format": "<span color='#89b4fa'>󰍛</span>  {percentage}%",
     "tooltip-format": "Used: {used} GB\nTotal: {total} GB\nUsage: {percentage}%",
     "tooltip": true,
     "interval": 1,
-    "exec": "free -h | awk '/^Mem:/ {print $3 \" / \" $2 \" GB\", $3/$2*100}' | awk '{print $1, $2, $3}'",
-    "format-alt": "{used}/{total} GB ({percentage}%)",
   },
 
   "disk": {
-    "format": "   {percentage_used}%",
+    "format": "<span color='#cba6f7'>󰋊</span>  {percentage_used}%",
     "tooltip-format": "Used: {used} GB\nTotal: {total} GB\nFree: {free} GB\nUsage: {percentage_used}%",
     "tooltip": true,
     "interval": 1,
-    "exec": "df -h --output=used,size,avail | awk 'NR==2 {print $1, $2, $3, $1/$2*100}'",
-    "format-alt": "{used}/{total} GB ({free} GB free, {percentage_used}%)",
   },
 
   "hyprland/workspaces": {},
@@ -136,23 +153,23 @@
   },
 
   "battery": {
+    "on-click": "~/hyprlab/config/scripts/battery-menu.sh",
     "states": {
       "good": 95,
       "warning": 30,
       "critical": 20,
     },
-    "format": "{icon} {capacity}%",
+    "format": "<span color='#fab387'>{icon}</span>  {capacity}%",
     "rotate": 0,
-    "format-charging": "  {capacity}%",
-    "format-plugged": "  {capacity}%",
-    "format-alt": "{time} {icon}",
+    "format-charging": "<span color='#fab387'>󰂄</span>  {capacity}%",
+    "format-plugged": "<span color='#fab387'>󰚥</span>  {capacity}%",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
   },
 
   "clock": {
-    "format": "<span color='#b4befe'>   </span>{:%I:%M %p}",
+    "on-click": "~/hyprlab/config/scripts/clock-menu.sh",
+    "format": "<span color='#89dceb'>󰥔</span>  {:%I:%M %p}",
     "rotate": 0,
-    "format-alt": "{:%R 󰃭 %d·%m·%y}",
     "tooltip-format": "<span>{calendar}</span>",
     "calendar": {
       "mode": "month",
@@ -175,23 +192,27 @@
   },
 
   "backlight": {
-    "device": "intel_backlight",
+    "device": "amdgpu_bl1",
     "rotate": 0,
-    "format": "{icon}  {percent}%",
-    "format-icons": ["", "", "", "", "", "", "", "", ""],
-    "on-scroll-up": "brightnessctl set 1%+",
-    "on-scroll-down": "brightnessctl set 1%-",
+    "format": "<span color='#f9e2af'>{icon}</span>  {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠", "󱩎", "󱩏", "󱩐", "󱩑", "󱩒", "󱩓"],
+    "on-click": "~/hyprlab/config/scripts/brightness-control.sh",
+    "on-scroll-up": "brightnessctl set +2%",
+    "on-scroll-down": "brightnessctl set 2%-",
+    "tooltip": false,
     "min-length": 6,
   },
 
   "pulseaudio": {
-    "format": "{icon}   {volume}",
+    "format": "<span color='#a6e3a1'>{icon}</span>  {volume}%",
     "rotate": 0,
-    "format-muted": "🔇",
-    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
-    "tooltip-format": "{icon} {desc} // {volume}%",
-    "scroll-step": 5,
+    "format-muted": "<span color='#f38ba8'>󰸈</span>  Muted",
+    "on-click": "~/hyprlab/config/scripts/volume-rofi.sh",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +2%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -2%",
+    "tooltip": false,
+    "scroll-step": 2,
     "format-icons": {
       "headphone": "",
       "hands-free": "",
@@ -199,37 +220,36 @@
       "phone": "",
       "portable": "",
       "car": "",
-      "default": ["", "", ""],
+      "default": ["󰕿", "󰖀", "󰕾"],
     },
   },
 
   "bluetooth": {
-    "format": "<span color='#b4befe'></span> {status}",
-    "format-disabled": "<span color='#b4befe'> Off</span>",
-    "format-connected": "<span color='#b4befe'></span> {device_alias}",
-    "tooltip-format": "{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}   {device_address}",
-    "on-click": "blueman-manager",
+    "format": "<span color='#cba6f7'>󰂯</span>  {status}",
+    "format-disabled": "<span color='#6c7086'>󰂲</span>  Off",
+    "format-connected": "<span color='#a6e3a1'>󰂱</span>  {device_alias}",
+    "tooltip": false,
+    "on-click": "~/hyprlab/config/scripts/bluetooth-menu.sh",
+    "on-click-right": "blueman-manager",
   },
 
   "network": {
     "interface": "wlo1",
     "format": "{ifname}",
-    "format-wifi": "<span color='#b4befe'>    </span>{essid}",
-    "format-ethernet": "{ipaddr}/{cidr} ",
-    "format-disconnected": "<span color='#b4befe'>󰖪 </span>No Network",
-    "tooltip-format": "{status}  // {ip}",
-    "tooltip": true,
-    "on-click": "nm-connection-editor",
+    "format-wifi": "<span color='#89b4fa'>󰖩</span>  {essid}",
+    "format-disconnected": "<span color='#f38ba8'>󰖪</span>  No Network",
+    "tooltip": false,
+    "on-click": "~/hyprlab/config/scripts/wifi-menu.sh",
+    "on-click-right": "nm-connection-editor",
   },
 
   "custom/power": {
-    "format": " {}",
+    "format": "<span color='#f38ba8'>󰐥</span>",
     "rotate": 0,
-    "exec": "echo ; echo 🌪️ shutdown",
     "interval": 86400,
     "on-click": "~/.config/wofi/powermenu",
     "tooltip": true,
+    "tooltip-format": "Power Menu",
   },
 
   "custom/l_end": {
@@ -278,5 +298,18 @@
     "format": " ",
     "interval": "once",
     "tooltip": false
+  },
+
+  "custom/spotify": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "~/hyprlab/config/scripts/spotify-control.sh waybar",
+    "on-click": "~/hyprlab/config/scripts/spotify-control.sh play-pause",
+    "on-click-right": "~/hyprlab/config/scripts/spotify-menu.sh",
+    "on-scroll-up": "~/hyprlab/config/scripts/spotify-control.sh next",
+    "on-scroll-down": "~/hyprlab/config/scripts/spotify-control.sh previous",
+    "interval": 2,
+    "escape": false,
+    "tooltip": true
   }
 }
