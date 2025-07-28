@@ -10,6 +10,7 @@ Complete Arch Linux configuration with automated installation for a beautiful Hy
 - **🌸 Catppuccin Theme**: Consistent theming across all applications
 - **💻 Neovim**: Fully configured IDE with LSP support
 - **🔍 Wofi**: Beautiful app launcher and menu system
+- **🎯 Rofi**: Interactive menus for system controls (WiFi, Bluetooth, Audio, etc.)
 - **🎨 Wallpaper Collection**: Curated anime, nature, and artistic wallpapers
 - **🔧 Zsh + Powerlevel10k**: Fast shell with beautiful prompt
 - **🔊 PipeWire Audio**: Modern audio system with full compatibility
@@ -26,8 +27,10 @@ Complete Arch Linux configuration with automated installation for a beautiful Hy
   - NVIDIA GPU support
 
 ### Status Bar & UI
-- **Waybar**: Custom status bar with system information
+- **Waybar**: Interactive status bar with Nerd Font icons and click-to-open controls
+- **Rofi**: Interactive menus for WiFi, Bluetooth, Battery, Audio, Brightness controls
 - **Wofi**: Application launcher with custom styling
+- **Spotify Integration**: Live music status with playback controls
 - **Hyprlock**: Screen locking utility
 - **Hypridle**: Idle management
 
@@ -100,7 +103,7 @@ The script automatically:
 ### Core Packages
 - **Window Manager**: Hyprland, hypridle, hyprpicker, xdg-desktop-portal-hyprland
 - **Audio System**: PipeWire, pipewire-pulse, pipewire-alsa, wireplumber, pavucontrol
-- **UI Components**: Waybar, Wofi, Mako (notifications), polkit-gnome
+- **UI Components**: Waybar, Wofi, Rofi-wayland, Mako (notifications), polkit-gnome
 - **Utilities**: wl-clipboard, xdg-utils, btop, fzf, ripgrep, fd, bat, eza
 - **Fonts**: Font Awesome, Noto Fonts, Papirus icons
 
@@ -120,21 +123,21 @@ Automatically detects and installs NVIDIA drivers if GPU is detected.
 <summary>Click to expand manual installation steps</summary>
 
 ```bash
-# Install core packages
-sudo pacman -S hyprland waybar kitty neovim zsh wofi mako pipewire pipewire-pulse wireplumber
+sudo pacman -S hyprland waybar kitty neovim zsh wofi rofi-wayland mako pipewire pipewire-pulse wireplumber
 
-# Create symlinks
-mkdir -p ~/.config
+mkdir -p ~/.config ~/.config/rofi
 ln -sf ~/hyprlab/config/hypr ~/.config/hypr
 ln -sf ~/hyprlab/config/kitty ~/.config/kitty
 ln -sf ~/hyprlab/config/nvim ~/.config/nvim
 ln -sf ~/hyprlab/config/waybar ~/.config/waybar
 ln -sf ~/hyprlab/config/wofi ~/.config/wofi
 ln -sf ~/hyprlab/config/mako ~/.config/mako
+ln -sf ~/hyprlab/config/scripts ~/.config/scripts
 ln -sf ~/hyprlab/zshrc ~/.zshrc
 ln -sf ~/hyprlab/p10k.zsh ~/.p10k.zsh
 
-# Enable services
+chmod +x ~/.config/scripts/*.sh
+
 systemctl --user enable pipewire pipewire-pulse wireplumber
 chsh -s $(which zsh)
 ```
@@ -167,7 +170,7 @@ hyprlab/
 │   ├── waybar/         # Status bar
 │   ├── wofi/           # App launcher
 │   ├── mako/           # Notification daemon
-│   ├── scripts/        # Utility scripts
+│   ├── scripts/        # System control menus and utilities
 │   └── assets/         # Wallpapers and resources
 ├── zshrc               # Zsh configuration
 ├── p10k.zsh            # Powerlevel10k theme
@@ -189,9 +192,20 @@ hyprlab/
 
 ## 📱 Waybar Features
 
+### Interactive System Controls
+- **WiFi Module** (󰖩): Click to open WiFi connection menu with network selection
+- **Bluetooth Module** (󰂯): Click to manage Bluetooth devices and connections
+- **Audio Module** (󰕾): Click for volume control with visual sliders
+- **Battery Module** (󰁹): Click for power management and system profiles
+- **Brightness Module** (󰃞): Click for display brightness control
+- **Clock Module** (󰥔): Click for calendar and time zone information
+
 ### Wallpaper Management
-- **Left Click** on wallpaper button (⛰️): Random wallpaper change
-- **Right Click** on wallpaper button (⛰️): Sequential wallpaper switching
+- **Wallpaper Button** (󰸉): Left click for next wallpaper, right click to switch themes
+- **Animation Button** (󰽡): Click to select wallpaper transition animations (fade, grow, wave, etc.)
+
+### Media Controls
+- **Spotify Module**: Shows current playing track with click for play/pause, scroll for next/previous
 
 ## 🎨 Customization
 
@@ -217,7 +231,22 @@ Hyprland keybindings are defined in `config/hypr/keybindings.conf`. Customize th
 
 ## 🔧 Utility Scripts
 
-- `scripts/swww.sh`: Wallpaper management with swww
+### Wallpaper Management
+- `scripts/swww.sh`: Dynamic wallpaper switching with configurable animations
+- `scripts/swww-animation.sh`: Interactive animation selector for wallpaper transitions
+
+### System Control Menus
+- `scripts/wifi-menu.sh`: WiFi network management with rofi interface
+- `scripts/bluetooth-menu.sh`: Bluetooth device pairing and connection management
+- `scripts/battery-menu.sh`: Power management and battery statistics
+- `scripts/brightness-control.sh`: Display brightness control with visual feedback
+- `scripts/volume-rofi.sh`: Audio control with volume sliders and device selection
+
+### Media Controls
+- `scripts/spotify-control.sh`: Spotify playback control and status display
+- `scripts/spotify-menu.sh`: Spotify playlist and track management
+
+### System Utilities
 - `scripts/maintenance.sh`: System maintenance automation  
 - `scripts/gitswitch.sh`: Git branch switching utility
 
