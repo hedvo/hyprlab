@@ -214,6 +214,7 @@ MISSING_PACKAGES=(
     "wl-clipboard"         # Wayland clipboard utility
     "xdg-utils"            # Desktop integration utilities
     "polkit-gnome"         # Authentication agent
+    "rofi-wayland"         # Application launcher and menu system
 )
 
 install_packages "${MISSING_PACKAGES[@]}"
@@ -299,6 +300,14 @@ create_symlink "$DOTFILES_DIR/config/waybar" "$CONFIG_DIR/waybar"
 create_symlink "$DOTFILES_DIR/config/wofi" "$CONFIG_DIR/wofi"
 create_symlink "$DOTFILES_DIR/config/mako" "$CONFIG_DIR/mako"
 create_symlink "$DOTFILES_DIR/config/scripts" "$CONFIG_DIR/scripts"
+
+print_status "Setting up rofi configuration..."
+mkdir -p "$CONFIG_DIR/rofi"
+if [[ -d "$CONFIG_DIR/rofi" ]]; then
+    print_success "Rofi themes directory created at ~/.config/rofi"
+else
+    print_warning "Failed to create rofi directory"
+fi
 
 print_status "Setting up shell configuration..."
 create_symlink "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
