@@ -86,7 +86,7 @@ handle_selection() {
             notify-send "Clock" "󰔄 Time refreshed: $(date '+%I:%M %p')"
             ;;
         "󰤰 Set Timezone")
-            chosen_tz=$(show_timezone_menu | rofi -dmenu -p "🌍 Timezone" -theme "$HOME/.config/rofi/clock-menu.rasi" -i -no-custom)
+            chosen_tz=$(show_timezone_menu | rofi -dmenu -p "🌍 Timezone" -theme "$HOME/hyprlab/config/rofi/clock-menu.rasi" -i -no-custom)
             case "$chosen_tz" in
                 *"America/New_York"*)
                     notify-send "Timezone" "Note: Use system settings to change timezone permanently"
@@ -116,7 +116,7 @@ handle_selection() {
             fi
             ;;
         "󰗐 World Clock")
-            chosen_world=$(show_world_clock | rofi -dmenu -p "🌍 World Clock" -theme "$HOME/.config/rofi/clock-menu.rasi" -i -no-custom)
+            chosen_world=$(show_world_clock | rofi -dmenu -p "🌍 World Clock" -theme "$HOME/hyprlab/config/rofi/clock-menu.rasi" -i -no-custom)
             if [[ "$chosen_world" == "󰆕 Back to Clock Menu" ]]; then
                 $0
             fi
@@ -126,6 +126,6 @@ handle_selection() {
     esac
 }
 
-chosen=$(create_clock_menu | rofi -dmenu -p "🕐 Clock" -theme "$HOME/.config/rofi/clock-menu.rasi" -i -no-custom)
+chosen=$(create_clock_menu | rofi -dmenu -p "🕐 Clock" -theme "$HOME/hyprlab/config/rofi/clock-menu.rasi" -i -no-custom)
 
 handle_selection "$chosen"

@@ -1,0 +1,199 @@
+* {
+    /* Color scheme */
+    bg-primary:             rgba(15, 15, 23, 0.95);
+    bg-secondary:           rgba(30, 30, 46, 0.8);
+    bg-tertiary:            rgba(49, 50, 68, 0.6);
+    bg-selected:            rgba(137, 180, 250, 0.3);
+    
+    border-primary:         rgba(137, 180, 250, 0.8);
+    border-secondary:       rgba(88, 91, 112, 0.5);
+    
+    text-primary:           rgba(205, 214, 244, 1);
+    text-secondary:         rgba(166, 173, 200, 0.8);
+    text-selected:          rgba(255, 255, 255, 1);
+    
+    accent-blue:            rgba(137, 180, 250, 1);
+    
+    font: "JetBrainsMono Nerd Font 11";
+    background-color: transparent;
+    
+    /* Standard rofi variables */
+    background:                  var(bg-primary);
+    foreground:                  var(text-primary);
+    border-color:                var(border-primary);
+    separatorcolor:              var(border-secondary);
+    selected-normal-background:  var(bg-selected);
+    selected-normal-foreground:  var(text-selected);
+    normal-background:           var(bg-secondary);
+    normal-foreground:           var(text-primary);
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 700px;
+    height: 500px;
+    
+    border: 2px solid;
+    border-color: var(border-primary);
+    border-radius: 16px;
+    
+    background-color: var(bg-primary);
+    padding: 0px;
+}
+
+mainbox {
+    spacing: 12px;
+    padding: 20px;
+    background-color: transparent;
+    border: 0px;
+    children: [ inputbar, listview, mode-switcher ];
+}
+
+inputbar {
+    spacing: 0px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background-color: var(bg-secondary);
+    border: 1px solid var(border-secondary);
+    text-color: var(text-primary);
+    children: [ prompt, textbox-prompt-colon, entry, case-indicator ];
+}
+
+prompt {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: var(accent-blue);
+    text-color: var(bg-primary);
+    font: "JetBrainsMono Nerd Font Bold 11";
+    spacing: 0px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: " ";
+    text-color: var(text-secondary);
+    margin: 0px 8px 0px 0px;
+}
+
+entry {
+    placeholder: "Search applications...";
+    placeholder-color: var(text-secondary);
+    text-color: var(text-primary);
+    cursor-color: var(accent-blue);
+    font: "JetBrainsMono Nerd Font 11";
+    spacing: 0px;
+    cursor: text;
+}
+
+case-indicator {
+    text-color: var(text-secondary);
+    spacing: 0px;
+}
+
+listview {
+    columns: 3;
+    lines: 12;
+    cycle: true;
+    dynamic: true;
+    scrollbar: true;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    
+    spacing: 8px;
+    background-color: transparent;
+    border: 0px;
+    padding: 0px;
+}
+
+element {
+    padding: 12px;
+    border-radius: 10px;
+    background-color: var(bg-secondary);
+    border: 1px solid transparent;
+    
+    orientation: vertical;
+    cursor: pointer;
+    spacing: 0px;
+}
+
+element normal.normal {
+    background-color: var(bg-secondary);
+    text-color: var(text-primary);
+}
+
+element selected.normal {
+    background-color: var(bg-selected);
+    text-color: var(text-selected);
+    border-color: var(border-primary);
+}
+
+element-icon {
+    background-color: transparent;
+    text-color: inherit;
+    size: 32px;
+    cursor: inherit;
+    margin: 0px 0px 8px 0px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    cursor: inherit;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    font: "JetBrainsMono Nerd Font 10";
+}
+
+scrollbar {
+    width: 4px;
+    border: 0px;
+    border-radius: 2px;
+    background-color: var(bg-tertiary);
+    handle-color: var(accent-blue);
+    handle-width: 4px;
+    padding: 0px;
+}
+
+mode-switcher {
+    spacing: 8px;
+    background-color: transparent;
+    margin: 12px 0px 0px 0px;
+    border: 0px;
+}
+
+button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: var(bg-secondary);
+    text-color: var(text-secondary);
+    border: 1px solid var(border-secondary);
+    cursor: pointer;
+    font: "JetBrainsMono Nerd Font 10";
+    spacing: 0px;
+}
+
+button selected {
+    background-color: var(accent-blue);
+    text-color: var(bg-primary);
+    border-color: var(accent-blue);
+    font: "JetBrainsMono Nerd Font Bold 10";
+}
+
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    display-drun: " Apps";
+    display-run: " Run";
+    display-window: "󰖲 Windows";
+    display-ssh: " SSH";
+    display-filebrowser: " Files";
+    
+    drun-display-format: "{name}";
+    disable-history: false;
+    click-to-exit: true;
+}

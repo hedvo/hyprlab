@@ -1,5 +1,81 @@
 #!/bin/bash
 
+
+create_battery_theme() {
+    cat > "$HOME/hyprlab/config/rofi/battery-menu.rasi" << 'EOF'
+* {
+    bg-col:             rgba(30, 30, 46, 100%);
+    bg-col-light:       rgba(49, 50, 68, 100%);
+    border-col:         rgba(250, 179, 135, 100%);
+    selected-col:       rgba(250, 179, 135, 100%);
+    fg-col:             rgba(205, 214, 244, 100%);
+    
+    font: "JetBrainsMono Nerd Font 12";
+    background-color: transparent;
+}
+
+window {
+    transparency: "real";
+    location: northeast;
+    anchor: northeast;
+    width: 400px;
+    height: 350px;
+    x-offset: -10px;
+    y-offset: 48px;
+    border: 2px solid;
+    border-radius: 12px;
+    border-color: @border-col;
+    background-color: @bg-col;
+}
+
+mainbox {
+    spacing: 8px;
+    padding: 8px;
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    spacing: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: @bg-col-light;
+    children: [ "prompt" ];
+}
+
+prompt {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: @selected-col;
+    text-color: @bg-col;
+}
+
+listview {
+    columns: 1;
+    lines: 12;
+    spacing: 2px;
+    background-color: transparent;
+}
+
+element {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: @fg-col;
+}
+
+element selected {
+    background-color: @selected-col;
+    text-color: @bg-col;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+EOF
+}
+
 get_battery_info() {
     local battery_path=$(upower -e | grep 'BAT' | head -1)
     if [[ -n "$battery_path" ]]; then
@@ -9,20 +85,30 @@ get_battery_info() {
     fi
 }
 
-battery_info=$(get_battery_info)
-battery_percentage=$(echo "$battery_info" | grep -o '[0-9]\+%' | head -1 | sed 's/%//')
-battery_state=$(echo "$battery_info" | grep 'state:' | awk '{print $2}')
-battery_capacity=$(echo "$battery_info" | grep 'capacity:' | awk '{print $2}' | sed 's/%//')
-battery_cycles=$(echo "$battery_info" | grep 'charge-cycles:' | awk '{print $2}')
-battery_energy=$(echo "$battery_info" | grep 'energy:' | head -1 | awk '{print $2, $3}')
-battery_voltage=$(echo "$battery_info" | grep 'voltage:' | awk '{print $2, $3}')
-battery_technology=$(echo "$battery_info" | grep 'technology:' | awk '{print $2}')
-
-current_power_profile=$(powerprofilesctl get 2>/dev/null || echo "not-available")
+get_battery_icon() {
+    local percentage=$1
+    local state=$2
+    
+    if [[ "$state" == "charging" ]]; then
+        echo "󰂄"
+    elif [[ "$state" == "fully-charged" ]]; then
+        echo "󰁹"
+    elif [[ $percentage -gt 80 ]]; then
+        echo "󰂂"
+    elif [[ $percentage -gt 60 ]]; then
+        echo "󰂀"
+    elif [[ $percentage -gt 40 ]]; then
+        echo "󰁾"
+    elif [[ $percentage -gt 20 ]]; then
+        echo "󰁼"
+    else
+        echo "󰁺"
+    fi
+}
 
 create_battery_bar() {
     local percentage=$1
-    local bar_length=30
+    local bar_length=25
     local filled=$((percentage * bar_length / 100))
     local empty=$((bar_length - filled))
     
@@ -36,105 +122,54 @@ create_battery_bar() {
     echo "$bar"
 }
 
-get_battery_icon() {
-    local percentage=$1
-    local state=$2
-    
-    if [[ "$state" == "charging" ]]; then
-        echo "󰂄"
-    elif [[ "$state" == "fully-charged" ]]; then
-        echo "󰁹"
-    elif [[ $percentage -gt 80 ]]; then
-        echo "󰁹"
-    elif [[ $percentage -gt 60 ]]; then
-        echo "󰁹"
-    elif [[ $percentage -gt 40 ]]; then
-        echo "󰁹"
-    elif [[ $percentage -gt 20 ]]; then
-        echo "󰂎"
-    else
-        echo "󰂎"
-    fi
-}
-
 create_battery_menu() {
-    local percentage=$1
-    local state=$2
-    local capacity=$3
+    local battery_info=$(get_battery_info)
+    local battery_percentage=$(echo "$battery_info" | grep -o '[0-9]\+%' | head -1 | sed 's/%//')
+    local battery_state=$(echo "$battery_info" | grep 'state:' | awk '{print $2}')
+    local battery_capacity=$(echo "$battery_info" | grep 'capacity:' | awk '{print $2}' | sed 's/%//')
+    local battery_energy=$(echo "$battery_info" | grep 'energy:' | head -1 | awk '{print $2, $3}')
+    local battery_technology=$(echo "$battery_info" | grep 'technology:' | awk '{print $2}')
     
-    menu_options=""
+    local battery_icon=$(get_battery_icon "$battery_percentage" "$battery_state")
+    local battery_bar=$(create_battery_bar "$battery_percentage")
+    local current_power_profile=$(powerprofilesctl get 2>/dev/null || echo "not-available")
     
-    local battery_icon=$(get_battery_icon "$percentage" "$state")
-    local battery_bar=$(create_battery_bar "$percentage")
+    echo "$battery_icon Battery: ${battery_percentage}% [$battery_bar]"
+    echo "󰄰 Status: $(echo "$battery_state" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1')"
     
-    menu_options+="$battery_icon Battery: ${percentage}% [$battery_bar]\n"
-    menu_options+="󰄰 Status: $(echo "$state" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1')\n"
-    
-    if [[ -n "$capacity" ]]; then
-        menu_options+="󱊝 Health: ${capacity}% capacity\n"
+    if [[ -n "$battery_capacity" ]]; then
+        echo "󱊝 Health: ${battery_capacity}% capacity"
     fi
-    
-    menu_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-    menu_options+="󰁹 Battery Details:\n"
-    menu_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     
     if [[ -n "$battery_energy" ]]; then
-        menu_options+="󰒡 Energy: $battery_energy\n"
-    fi
-    if [[ -n "$battery_voltage" ]]; then
-        menu_options+="󰂄 Voltage: $battery_voltage\n"
-    fi
-    if [[ -n "$battery_cycles" ]]; then
-        menu_options+="󰔄 Charge Cycles: $battery_cycles\n"
-    fi
-    if [[ -n "$battery_technology" ]]; then
-        menu_options+="󰇪 Technology: $(echo "$battery_technology" | sed 's/-/ /g')\n"
+        echo "󰒡 Energy: $battery_energy"
     fi
     
-    menu_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-    menu_options+="󰏐 Power Management:\n"
-    menu_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    if [[ -n "$battery_technology" ]]; then
+        echo "󰇪 Technology: $(echo "$battery_technology" | sed 's/-/ /g')"
+    fi
+    
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "󰏐 Power Management:"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     
     if [[ "$current_power_profile" != "not-available" ]]; then
-        menu_options+="󰆪 Current Profile: $(echo "$current_power_profile" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1')\n"
-        menu_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        echo "󰆪 Current: $(echo "$current_power_profile" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1')"
         
         if [[ "$current_power_profile" != "performance" ]]; then
-            menu_options+="󰚀 Performance Mode\n"
+            echo "󰚀 Performance Mode"
         fi
         if [[ "$current_power_profile" != "balanced" ]]; then
-            menu_options+="󰈖 Balanced Mode\n"
+            echo "󰈖 Balanced Mode"
         fi
         if [[ "$current_power_profile" != "power-saver" ]]; then
-            menu_options+="󰁹 Power Saver Mode\n"
+            echo "󰁹 Power Saver Mode"
         fi
-        menu_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
     fi
     
-    menu_options+="󰊴 Suspend System\n"
-    menu_options+="󰊲 Hibernate System\n"
-    menu_options+="󰆊 Power Statistics\n"
-    menu_options+="󰏗 Power Settings\n"
-    
-    echo -e "$menu_options"
-}
-
-show_battery_stats() {
-    stats_options=""
-    stats_options+="󰆊 Battery Statistics:\n"
-    stats_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-    
-    local power_history=$(upower -i $(upower -e | grep 'BAT') | grep -E 'energy-rate|time')
-    if [[ -n "$power_history" ]]; then
-        echo "$power_history" | while read line; do
-            stats_options+="$line\n"
-        done
-    fi
-    
-    stats_options+="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-    stats_options+="󰆕 Back to Battery Menu\n"
-    
-    echo -e "$stats_options"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "󰊴 Suspend System"
+    echo "󰆊 Battery Statistics"
 }
 
 handle_selection() {
@@ -166,29 +201,24 @@ handle_selection() {
         "󰊴 Suspend System")
             systemctl suspend
             ;;
-        "󰊲 Hibernate System")
-            systemctl hibernate
-            ;;
-        "󰆊 Power Statistics")
-            chosen_stats=$(show_battery_stats | rofi -dmenu -p "📊 Stats" -theme "$HOME/.config/rofi/battery-menu.rasi" -i -no-custom)
-            if [[ "$chosen_stats" == "󰆕 Back to Battery Menu" ]]; then
-                $0
-            fi
-            ;;
-        "󰏗 Power Settings")
+        "󰆊 Battery Statistics")
             if command -v gnome-power-statistics &> /dev/null; then
                 gnome-power-statistics &
             elif command -v powertop &> /dev/null; then
                 kitty powertop &
             else
-                notify-send "Power Settings" "No power management GUI found"
+                notify-send "Battery" "No power statistics tool found"
             fi
-            ;;
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"|"󰁹 Battery Details:"|"󰏐 Power Management:"|*"Battery: "*|*"Status: "*|*"Health: "*|*"Energy: "*|*"Voltage: "*|*"Charge Cycles: "*|*"Technology: "*|*"Current Profile: "*)
             ;;
     esac
 }
 
-chosen=$(create_battery_menu "$battery_percentage" "$battery_state" "$battery_capacity" | rofi -dmenu -p "🔋 Battery" -theme "$HOME/.config/rofi/battery-menu.rasi" -i -no-custom)
+if [[ ! -f "$HOME/hyprlab/config/rofi/battery-menu.rasi" ]]; then
+    create_battery_theme
+fi
 
-handle_selection "$chosen"
+chosen=$(create_battery_menu | rofi -dmenu -p "🔋 Battery" -theme "$HOME/hyprlab/config/rofi/battery-menu.rasi" -i -no-custom)
+
+if [[ -n "$chosen" ]]; then
+    handle_selection "$chosen"
+fi

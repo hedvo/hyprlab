@@ -1,0 +1,102 @@
+* {
+    /* Modern glassmorphism color scheme */
+    bg-primary:             rgba(15, 15, 23, 0.95);
+    bg-secondary:           rgba(30, 30, 46, 0.85);
+    bg-selected:            rgba(137, 180, 250, 0.3);
+    border-primary:         rgba(137, 180, 250, 0.8);
+    text-primary:           rgba(205, 214, 244, 1);
+    text-selected:          rgba(255, 255, 255, 1);
+    accent-blue:            rgba(137, 180, 250, 1);
+    
+    background-color: transparent;
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+window {
+    transparency: "real";
+    background-color: @bg-primary;
+    border: 2px solid;
+    border-color: @border-primary;
+    border-radius: 16px;
+    width: 380px;
+    location: northeast;
+    anchor: northeast;
+    x-offset: -20px;
+    y-offset: 60px;
+}
+
+mainbox {
+    background-color: transparent;
+    padding: 18px;
+    spacing: 12px;
+}
+
+inputbar {
+    background-color: @bg-secondary;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin: 0px 0px 16px 0px;
+    border: 1px solid @border-primary;
+    children: [prompt, entry];
+}
+
+prompt {
+    background-color: @accent-blue;
+    text-color: @bg-primary;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin: 0px 12px 0px 0px;
+    font: "JetBrainsMono Nerd Font Bold 11";
+}
+
+entry {
+    background-color: transparent;
+    text-color: @text-primary;
+    placeholder-color: rgba(166, 173, 200, 0.6);
+    cursor-color: @accent-blue;
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 8;
+    scrollbar: true;
+    spacing: 6px;
+    cycle: true;
+    dynamic: true;
+}
+
+element {
+    background-color: @bg-secondary;
+    text-color: @text-primary;
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+}
+
+element selected {
+    background-color: @bg-selected;
+    text-color: @text-selected;
+    border-color: @border-primary;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 24px;
+    margin: 0px 12px 0px 0px;
+}
+
+scrollbar {
+    width: 4px;
+    border: 0px;
+    border-radius: 2px;
+    background-color: rgba(49, 50, 68, 0.4);
+    handle-color: @accent-blue;
+    handle-width: 4px;
+}

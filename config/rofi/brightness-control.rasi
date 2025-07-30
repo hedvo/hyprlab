@@ -1,0 +1,135 @@
+* {
+    bg-col:             rgba(30, 30, 46, 100%);
+    bg-col-light:       rgba(49, 50, 68, 100%);
+    border-col:         rgba(249, 226, 175, 100%);
+    selected-col:       rgba(249, 226, 175, 100%);
+    yellow:             rgba(249, 226, 175, 100%);
+    fg-col:             rgba(205, 214, 244, 100%);
+    grey:               rgba(108, 112, 134, 100%);
+    accent:             rgba(245, 194, 231, 100%);
+    
+    font: "JetBrainsMono Nerd Font 11";
+    background-color: transparent;
+}
+
+window {
+    transparency: "real";
+    location: northeast;
+    anchor: northeast;
+    fullscreen: false;
+    width: 400px;
+    height: 450px;
+    x-offset: -10px;
+    y-offset: 48px;
+    enabled: true;
+    margin: 0px;
+    padding: 0px;
+    border: 2px solid;
+    border-radius: 12px;
+    border-color: @border-col;
+    background-color: @bg-col;
+    cursor: "default";
+}
+
+mainbox {
+    enabled: true;
+    spacing: 8px;
+    margin: 0px;
+    padding: 8px;
+    border: 0px solid;
+    border-radius: 0px;
+    border-color: @border-col;
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    enabled: true;
+    spacing: 8px;
+    margin: 0px 0px 8px 0px;
+    padding: 8px;
+    border: 0px solid;
+    border-radius: 8px;
+    border-color: @border-col;
+    background-color: @bg-col-light;
+    text-color: @fg-col;
+    children: [ "prompt", "entry" ];
+}
+
+prompt {
+    enabled: true;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: @yellow;
+    text-color: @bg-col;
+}
+
+entry {
+    enabled: true;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: @fg-col;
+    cursor: text;
+    placeholder: "Brightness controls...";
+    placeholder-color: @grey;
+}
+
+listview {
+    enabled: true;
+    columns: 1;
+    lines: 15;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+    spacing: 1px;
+    margin: 0px;
+    padding: 0px;
+    border: 0px solid;
+    border-radius: 0px;
+    border-color: @border-col;
+    background-color: transparent;
+    text-color: @fg-col;
+    cursor: "default";
+}
+
+element {
+    enabled: true;
+    spacing: 8px;
+    margin: 0px;
+    padding: 6px 12px;
+    border: 0px solid;
+    border-radius: 6px;
+    border-color: @border-col;
+    background-color: transparent;
+    text-color: @fg-col;
+    cursor: pointer;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg-col;
+}
+
+element selected.normal {
+    background-color: @selected-col;
+    text-color: @bg-col;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    highlight: inherit;
+    cursor: inherit;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color: inherit;
+    size: 16px;
+    cursor: inherit;
+}

@@ -125,7 +125,7 @@ Automatically detects and installs NVIDIA drivers if GPU is detected.
 ```bash
 sudo pacman -S hyprland waybar kitty neovim zsh wofi rofi-wayland mako pipewire pipewire-pulse wireplumber
 
-mkdir -p ~/.config ~/.config/rofi
+mkdir -p ~/.config $HOME/hyprlab/config/rofi
 ln -sf ~/hyprlab/config/hypr ~/.config/hypr
 ln -sf ~/hyprlab/config/kitty ~/.config/kitty
 ln -sf ~/hyprlab/config/nvim ~/.config/nvim

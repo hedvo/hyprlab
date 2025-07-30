@@ -189,6 +189,6 @@ handle_selection() {
     esac
 }
 
-chosen=$(create_spotify_menu | rofi -dmenu -p "󰎇 Spotify" -theme "$HOME/.config/rofi/spotify-menu.rasi" -i -no-custom)
+chosen=$(create_spotify_menu | rofi -dmenu -p "󰎇 Spotify" -theme "$HOME/hyprlab/config/rofi/spotify-menu.rasi" -i -no-custom)
 
 handle_selection "$chosen"

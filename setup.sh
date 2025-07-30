@@ -304,7 +304,7 @@ create_symlink "$DOTFILES_DIR/config/scripts" "$CONFIG_DIR/scripts"
 print_status "Setting up rofi configuration..."
 mkdir -p "$CONFIG_DIR/rofi"
 if [[ -d "$CONFIG_DIR/rofi" ]]; then
-    print_success "Rofi themes directory created at ~/.config/rofi"
+    print_success "Rofi themes directory created at $HOME/hyprlab/config/rofi"
 else
     print_warning "Failed to create rofi directory"
 fi

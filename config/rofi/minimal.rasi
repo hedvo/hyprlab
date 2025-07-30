@@ -1,0 +1,104 @@
+* {
+    bg-primary:             rgba(15, 15, 23, 95%);
+    bg-secondary:           rgba(30, 30, 46, 80%);
+    bg-selected:            rgba(137, 180, 250, 30%);
+    border-primary:         rgba(137, 180, 250, 80%);
+    text-primary:           rgba(205, 214, 244, 100%);
+    text-selected:          rgba(255, 255, 255, 100%);
+    accent-blue:            rgba(137, 180, 250, 100%);
+    
+    background-color: transparent;
+    font: "JetBrainsMono Nerd Font 11";
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    width: 600px;
+    height: 400px;
+    border: 2px solid;
+    border-color: @border-primary;
+    border-radius: 12px;
+    background-color: @bg-primary;
+    padding: 0px;
+}
+
+mainbox {
+    spacing: 10px;
+    padding: 15px;
+    background-color: transparent;
+    border: 0px;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    spacing: 0px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background-color: @bg-secondary;
+    text-color: @text-primary;
+    children: [ prompt, textbox-prompt-colon, entry ];
+}
+
+prompt {
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: @accent-blue;
+    text-color: @bg-primary;
+    spacing: 0px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: " ";
+    text-color: @text-primary;
+    margin: 0px 6px 0px 0px;
+}
+
+entry {
+    text-color: @text-primary;
+    cursor-color: @accent-blue;
+    spacing: 0px;
+    cursor: text;
+}
+
+listview {
+    columns: 1;
+    lines: 8;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    spacing: 4px;
+    background-color: transparent;
+    border: 0px;
+    padding: 0px;
+}
+
+element {
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: @bg-secondary;
+    cursor: pointer;
+    spacing: 0px;
+}
+
+element selected {
+    background-color: @bg-selected;
+    text-color: @text-selected;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    cursor: inherit;
+    vertical-align: 0.5;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color: inherit;
+    size: 20px;
+    cursor: inherit;
+    margin: 0px 8px 0px 0px;
+}

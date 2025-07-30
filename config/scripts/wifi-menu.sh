@@ -1,5 +1,80 @@
 #!/bin/bash
 
+create_wifi_theme() {
+    cat > "$HOME/hyprlab/config/rofi/wifi-menu.rasi" << 'EOF'
+* {
+    bg-col:             rgba(30, 30, 46, 100%);
+    bg-col-light:       rgba(49, 50, 68, 100%);
+    border-col:         rgba(166, 227, 161, 100%);
+    selected-col:       rgba(166, 227, 161, 100%);
+    fg-col:             rgba(205, 214, 244, 100%);
+    
+    font: "JetBrainsMono Nerd Font 12";
+    background-color: transparent;
+}
+
+window {
+    transparency: "real";
+    location: northeast;
+    anchor: northeast;
+    width: 400px;
+    height: 400px;
+    x-offset: -10px;
+    y-offset: 48px;
+    border: 2px solid;
+    border-radius: 12px;
+    border-color: @border-col;
+    background-color: @bg-col;
+}
+
+mainbox {
+    spacing: 8px;
+    padding: 8px;
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    spacing: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: @bg-col-light;
+    children: [ "prompt" ];
+}
+
+prompt {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: @selected-col;
+    text-color: @bg-col;
+}
+
+listview {
+    columns: 1;
+    lines: 15;
+    spacing: 2px;
+    background-color: transparent;
+}
+
+element {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: @fg-col;
+}
+
+element selected {
+    background-color: @selected-col;
+    text-color: @bg-col;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+EOF
+}
+
 wifi_status=$(nmcli radio wifi)
 
 if [[ "$wifi_status" == "disabled" ]]; then
@@ -48,7 +123,11 @@ else
     fi
 fi
 
-chosen=$(echo -e "$menu_options" | rofi -dmenu -p "WiFi" -theme "$HOME/.config/rofi/wifi-menu.rasi")
+if [[ ! -f "$HOME/hyprlab/config/rofi/wifi-menu.rasi" ]]; then
+    create_wifi_theme
+fi
+
+chosen=$(echo -e "$menu_options" | rofi -dmenu -p "📶 WiFi" -theme "$HOME/hyprlab/config/rofi/wifi-menu.rasi" -i -no-custom)
 
 case "$chosen" in
     "󰖩 Turn On WiFi")
@@ -93,7 +172,7 @@ case "$chosen" in
                 nmcli connection up "$ssid"
                 notify-send "WiFi" "Connecting to $ssid..."
             elif [[ "$security" == *"WPA"* ]] || [[ "$security" == *"WEP"* ]]; then
-                password=$(echo "" | rofi -dmenu -password -p "🔐 $ssid" -theme "$HOME/.config/rofi/password.rasi")
+                password=$(echo "" | rofi -dmenu -password -p "🔐 $ssid" -theme "$HOME/hyprlab/config/rofi/password.rasi")
                 if [[ -n "$password" ]]; then
                     nmcli device wifi connect "$ssid" password "$password"
                     notify-send "WiFi" "Connecting to $ssid..."

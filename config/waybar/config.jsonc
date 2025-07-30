@@ -74,7 +74,7 @@
     "format": " ",
     "tooltip": true,
     "tooltip-format": "Open Arch Wiki",
-    "on-click": "pkill wofi || wofi -s ~/.config/wofi/menu.css",
+    "on-click": "~/hyprlab/config/scripts/arch-wiki-menu.sh",
   },
 
   "custom/wallchange": {
@@ -100,7 +100,7 @@
     "format": " <span color='#89dceb' size='large'>󰄀</span> ",
     "exec": "echo ; echo  take screenshot",
     "interval": 86400,
-    "on-click": "~/.config/wofi/screenshotmenu",
+    "on-click": "~/hyprlab/config/scripts/screenshot-menu.sh",
     "tooltip": true,
     "tooltip-format": "Take a screenshot",
   },
@@ -167,7 +167,7 @@
   },
 
   "clock": {
-    "on-click": "~/hyprlab/config/scripts/clock-menu.sh",
+    "on-click": "~/hyprlab/config/scripts/date-menu.sh",
     "format": "<span color='#89dceb'>󰥔</span>  {:%I:%M %p}",
     "rotate": 0,
     "tooltip-format": "<span>{calendar}</span>",
@@ -247,7 +247,7 @@
     "format": "<span color='#f38ba8'>󰐥</span>",
     "rotate": 0,
     "interval": 86400,
-    "on-click": "~/.config/wofi/powermenu",
+    "on-click": "~/hyprlab/config/scripts/power-menu.sh",
     "tooltip": true,
     "tooltip-format": "Power Menu",
   },

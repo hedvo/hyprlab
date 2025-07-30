@@ -45,7 +45,7 @@ create_interactive_bar() {
     echo -e "$menu_options"
 }
 
-chosen=$(create_interactive_bar "$current_volume" | rofi -dmenu -p "🎵 Volume Slider" -theme "$HOME/.config/rofi/volume-control.rasi" -i)
+chosen=$(create_interactive_bar "$current_volume" | rofi -dmenu -p "🎵 Volume Slider" -theme "$HOME/hyprlab/config/rofi/volume-control.rasi" -i)
 
 case "$chosen" in
     "🔊 Unmute"*)

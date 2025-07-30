@@ -1,5 +1,80 @@
 #!/bin/bash
 
+create_volume_theme() {
+    cat > "$HOME/hyprlab/config/rofi/volume-control.rasi" << 'EOF'
+* {
+    bg-col:             rgba(30, 30, 46, 100%);
+    bg-col-light:       rgba(49, 50, 68, 100%);
+    border-col:         rgba(245, 194, 231, 100%);
+    selected-col:       rgba(245, 194, 231, 100%);
+    fg-col:             rgba(205, 214, 244, 100%);
+    
+    font: "JetBrainsMono Nerd Font 12";
+    background-color: transparent;
+}
+
+window {
+    transparency: "real";
+    location: northeast;
+    anchor: northeast;
+    width: 420px;
+    height: 400px;
+    x-offset: -10px;
+    y-offset: 48px;
+    border: 2px solid;
+    border-radius: 12px;
+    border-color: @border-col;
+    background-color: @bg-col;
+}
+
+mainbox {
+    spacing: 8px;
+    padding: 8px;
+    background-color: transparent;
+    children: [ "inputbar", "listview" ];
+}
+
+inputbar {
+    spacing: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: @bg-col-light;
+    children: [ "prompt" ];
+}
+
+prompt {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: @selected-col;
+    text-color: @bg-col;
+}
+
+listview {
+    columns: 1;
+    lines: 15;
+    spacing: 2px;
+    background-color: transparent;
+}
+
+element {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: @fg-col;
+}
+
+element selected {
+    background-color: @selected-col;
+    text-color: @bg-col;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+}
+EOF
+}
+
 current_volume=$(pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $5}' | sed 's/%//')
 is_muted=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -q "yes" && echo "true" || echo "false")
 
@@ -73,7 +148,11 @@ create_volume_menu() {
     echo -e "$menu_options"
 }
 
-chosen=$(create_volume_menu "$current_volume" "$is_muted" | rofi -dmenu -p "🎵 Volume" -theme "$HOME/.config/rofi/volume-control.rasi" -i -no-custom)
+if [[ ! -f "$HOME/hyprlab/config/rofi/volume-control.rasi" ]]; then
+    create_volume_theme
+fi
+
+chosen=$(create_volume_menu "$current_volume" "$is_muted" | rofi -dmenu -p "🎵 Volume" -theme "$HOME/hyprlab/config/rofi/volume-control.rasi" -i -no-custom)
 
 case "$chosen" in
     "🔊 Unmute"*)

@@ -1,0 +1,120 @@
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "  Apps ";
+    display-run: "  Run ";
+    display-window: " 󰖲 Window";
+    display-Network: " 󰤨 Network";
+    sidebar-mode: true;
+}
+
+@theme "Monokai"
+
+* {
+    background-color: rgba(24, 24, 37, 0.95);
+    border-color: rgba(137, 180, 250, 0.8);
+    text-color: rgba(205, 214, 244, 1.0);
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 600px;
+    height: 400px;
+    x-offset: 0px;
+    y-offset: 0px;
+    
+    border: 2px solid;
+    border-radius: 12px;
+    cursor: "default";
+}
+
+prompt {
+    enabled: true;
+    padding: 6px 12px 6px 12px;
+    background-color: rgba(137, 180, 250, 1.0);
+    text-color: rgba(24, 24, 37, 1.0);
+    border-radius: 6px;
+    margin: 0px 10px 0px 0px;
+}
+
+entry {
+    background-color: rgba(49, 50, 68, 0.8);
+    text-color: rgba(205, 214, 244, 1.0);
+    placeholder-color: rgba(166, 173, 200, 0.6);
+    expand: true;
+    horizontal-align: 0;
+    placeholder: "Search...";
+    padding: 6px 12px 6px 12px;
+    border-radius: 6px;
+    blink: true;
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    background-color: rgba(49, 50, 68, 0.8);
+    text-color: rgba(205, 214, 244, 1.0);
+    expand: false;
+    border-radius: 8px;
+    margin: 0px 0px 10px 0px;
+    padding: 8px;
+}
+
+listview {
+    background-color: transparent;
+    columns: 1;
+    lines: 8;
+    spacing: 4px;
+    cycle: true;
+    dynamic: true;
+    layout: vertical;
+}
+
+mainbox {
+    background-color: transparent;
+    border: 0px;
+    border-radius: 0px;
+    border-color: rgba(137, 180, 250, 0.8);
+    children: [ inputbar, listview ];
+    spacing: 10px;
+    padding: 15px;
+}
+
+element {
+    background-color: rgba(49, 50, 68, 0.6);
+    text-color: rgba(205, 214, 244, 1.0);
+    orientation: horizontal;
+    border-radius: 6px;
+    padding: 8px 12px 8px 12px;
+}
+
+element-icon {
+    background-color: transparent;
+    text-color: inherit;
+    size: 20px;
+    border: 0px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    expand: true;
+    horizontal-align: 0;
+    vertical-align: 0.5;
+    margin: 0px 0px 0px 10px;
+}
+
+element selected {
+    background-color: rgba(137, 180, 250, 0.3);
+    text-color: rgba(255, 255, 255, 1.0);
+    border: 0px 0px 0px 0px;
+    border-radius: 6px;
+    border-color: rgba(137, 180, 250, 0.8);
+}

@@ -50,7 +50,7 @@ menu_options+="➖ Volume -1%\n"
 menu_options+="──────────────────────────\n"
 menu_options+="🎚️ Audio Settings\n"
 
-chosen=$(echo -e "$menu_options" | rofi -dmenu -p "🎵 Audio" -theme "$HOME/.config/rofi/volume-control.rasi")
+chosen=$(echo -e "$menu_options" | rofi -dmenu -p "🎵 Audio" -theme "$HOME/hyprlab/config/rofi/volume-control.rasi")
 
 case "$chosen" in
     "🔊 Unmute")

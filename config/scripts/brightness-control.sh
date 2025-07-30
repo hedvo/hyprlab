@@ -84,7 +84,7 @@ create_brightness_menu() {
 }
 
 create_brightness_theme() {
-    cat > "$HOME/.config/rofi/brightness-control.rasi" << 'EOF'
+    cat > "$HOME/hyprlab/config/rofi/brightness-control.rasi" << 'EOF'
 /**
  * Brightness Control Theme - Catppuccin Mocha
  */
@@ -227,11 +227,11 @@ element-icon {
 EOF
 }
 
-if [[ ! -f "$HOME/.config/rofi/brightness-control.rasi" ]]; then
+if [[ ! -f "$HOME/hyprlab/config/rofi/brightness-control.rasi" ]]; then
     create_brightness_theme
 fi
 
-chosen=$(create_brightness_menu "$current_brightness" | rofi -dmenu -p "💡 Brightness" -theme "$HOME/.config/rofi/brightness-control.rasi" -i -no-custom)
+chosen=$(create_brightness_menu "$current_brightness" | rofi -dmenu -p "💡 Brightness" -theme "$HOME/hyprlab/config/rofi/brightness-control.rasi" -i -no-custom)
 
 case "$chosen" in
     *"% ["*)

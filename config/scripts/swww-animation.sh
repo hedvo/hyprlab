@@ -10,7 +10,7 @@ if [ -z "$current_wallpaper" ]; then
     exit 1
 fi
 
-selected_animation=$(printf '%s\n' "${animations[@]}" | rofi -dmenu -i -p "󰽡 Animation" -theme "$HOME/.config/rofi/wallpaper-animation.rasi")
+selected_animation=$(printf '%s\n' "${animations[@]}" | rofi -dmenu -i -p "󰽡 Animation" -theme "$HOME/hyprlab/config/rofi/wallpaper-menu.rasi")
 
 if [ -n "$selected_animation" ]; then
     echo "$selected_animation" > /tmp/swww_animation
