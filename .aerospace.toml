@@ -1,0 +1,73 @@
+# Basic settings
+start-at-login = true
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+key-mapping.preset = 'qwerty'
+
+# Gaps similar to your Hyprland setup
+gaps.inner.horizontal = 10
+gaps.inner.vertical = 10
+gaps.outer.left = 10
+gaps.outer.right = 10
+gaps.outer.top = 10
+gaps.outer.bottom = 10
+
+[mode.main.binding]
+
+# Window management
+cmd-shift-v = 'layout floating tiling'
+cmd-p = 'layout tiles horizontal vertical' # pseudo tile equivalent
+
+# Focus movement (matches your Super+Arrow keys)
+cmd-left = 'focus left'
+cmd-right = 'focus right'
+cmd-up = 'focus up'
+cmd-down = 'focus down'
+alt-tab = 'focus down'
+
+# Window resizing (matches your Super+Shift+Alt+Arrow)
+cmd-shift-alt-right = 'resize smart +30'
+cmd-shift-alt-left = 'resize smart -30'
+cmd-shift-alt-down = 'resize smart +30'
+cmd-shift-alt-up = 'resize smart -30'
+
+# Move/swap windows (matches your Super+Shift+Arrow)
+cmd-shift-left = 'move left'
+cmd-shift-right = 'move right'
+cmd-shift-up = 'move up'
+cmd-shift-down = 'move down'
+
+# Workspace switching (matches your Super+1-9,0)
+cmd-1 = 'workspace 1'
+cmd-2 = 'workspace 2'
+cmd-3 = 'workspace 3'
+cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
+cmd-6 = 'workspace 6'
+cmd-7 = 'workspace 7'
+cmd-8 = 'workspace 8'
+cmd-9 = 'workspace 9'
+cmd-0 = 'workspace 10'
+
+# Move windows to workspaces (matches your Super+Shift+1-9,0)
+cmd-shift-1 = 'move-node-to-workspace 1'
+cmd-shift-2 = 'move-node-to-workspace 2'
+cmd-shift-3 = 'move-node-to-workspace 3'
+cmd-shift-4 = 'move-node-to-workspace 4'
+cmd-shift-5 = 'move-node-to-workspace 5'
+cmd-shift-6 = 'move-node-to-workspace 6'
+cmd-shift-7 = 'move-node-to-workspace 7'
+cmd-shift-8 = 'move-node-to-workspace 8'
+cmd-shift-9 = 'move-node-to-workspace 9'
+cmd-shift-0 = 'move-node-to-workspace 10'
+
+# Window cycling
+cmd-tab = 'workspace-back-and-forth'
+
+# Full screen toggle
+cmd-f = 'fullscreen'
+
+# Reload config
+cmd-shift-r = 'reload-config'
+
+
